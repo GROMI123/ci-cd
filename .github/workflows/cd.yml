@@ -17,3 +17,11 @@ jobs:
         distribution: 'temurin'
     - name: Build Application
       uses: mvn clean package
+
+    -name:
+      run:
+    permissions:
+      contents: read
+      packages: write
+      - name: login to GHCR
+        uses: docker/login-action@v3
