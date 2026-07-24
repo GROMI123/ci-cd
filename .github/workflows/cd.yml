@@ -1,15 +1,19 @@
 name: SpringBoot CI
+
 on:
   push:
     branches:
       - main
+
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
 
+<<<<<<< HEAD
     - name: Setup Jave
       uses: actions/steup-java@v4
       with:
@@ -25,3 +29,33 @@ jobs:
       packages: write
       - name: login to GHCR
         uses: docker/login-action@v3
+=======
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission
+        run: chmod +x ./mvnw
+
+      - name: Build Application
+        run: ./mvnw clean package
+
+      - name: Build Docker Image
+        run: docker build -t ghcr.io/gromi123/ci-cd:latest .
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Image
+        run: docker push ghcr.io/gromi123/ci-cd:latest
+>>>>>>> 04f7aad4a7ac54621b540a05df30753208f98be5
