@@ -30,7 +30,7 @@ jobs:
         run: ./mvnw clean package
 
       - name: Build Docker Image
-        run: docker build -t ghcr.io/${{ github.repository }}/ci-cd:latest .
+        run: docker build -t ghcr.io/gromi123/ci-cd:latest .
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -40,4 +40,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Image
-        run: docker push ghcr.io/${{ github.repository }}/ci-cd:latest
+        run: docker push ghcr.io/gromi123/ci-cd:latest
